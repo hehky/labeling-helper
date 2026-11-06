@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>标注提效 - 本地模拟标注页</title>
+<style>
+  body { font-family: sans-serif; max-width: 640px; margin: 24px auto; padding: 0 12px; }
+  .q-id { color: #888; font-size: 13px; }
+  .q-text { font-size: 17px; margin: 8px 0 16px; }
+  .q-option { display: block; padding: 10px 12px; margin: 6px 0; border: 1px solid #ccc;
+              border-radius: 6px; cursor: pointer; }
+  .q-option.selected { background: #d6eaff; border-color: #3a86ff; }
+  .q-input { width: 100%; padding: 8px; font-size: 15px; margin: 8px 0 16px; }
+  button { padding: 8px 18px; margin-right: 10px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div id="q" data-type="single">
+  <div class="q-id">Q1</div>
+  <div class="q-text">下列哪一项不属于水果？（注意「不属于」）</div>
+  <div class="q-option"><span class="q-option-text">苹果</span></div>
+  <div class="q-option"><span class="q-option-text">香蕉</span></div>
+  <div class="q-option"><span class="q-option-text">土豆</span></div>
+  <div class="q-option"><span class="q-option-text">橙子</span></div>
+</div>
+
+<div id="q2" data-type="text" style="display:none">
+  <div class="q-id">Q2</div>
+  <div class="q-text">填空：1 + 1 = ?（填数字）</div>
+  <input class="q-input" type="text" placeholder="在此输入，数字键不应触发选择">
+</div>
+
+<button class="q-submit">提交</button>
+<button class="q-next">下一题</button>
+<span id="msg" style="color:#3a86ff"></span>
+
+<script>
+// demo 平台自有逻辑（脚本不得干扰）
+var idx = 1;
+function refresh() {
+  document.getElementById('q').style.display = idx === 1 ? '' : 'none';
+  document.getElementById('q2').style.display = idx === 2 ? '' : 'none';
+  document.querySelectorAll('.q-id').forEach(function () {});
+}
+document.querySelectorAll('.q-option').forEach(function (el) {
+  el.addEventListener('click', function () {
+    document.querySelectorAll('.q-option').forEach(function (o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+  });
+});
+document.querySelector('.q-submit').addEventListener('click', function () {
+  document.getElementById('msg').textContent = '已提交（demo 平台）';
+});
+document.querySelector('.q-next').addEventListener('click', function () {
+  idx = idx === 1 ? 2 : 1;
+  document.getElementById('msg').textContent = '';
+  refresh();
+});
+refresh();
+</script>
+</body>
+</html>
